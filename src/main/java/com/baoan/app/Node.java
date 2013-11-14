@@ -1,6 +1,6 @@
 package com.baoan.app;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,15 +30,15 @@ class Node<T> {
 
     void addChild(T child) {
         if ( null == children ) {
-            children = new LinkedList<T>();
+            children = new ArrayList<T>();
         }
-        //TODO: need to use binary search to find position
+        //TODO: need to use binary binarySearch to find position
         children.add(child);
     }
 
     void addChildren(List<T> children) {
         if ( null == children ) {
-            children = new LinkedList<T>();
+            children = new ArrayList<T>();
         }
         for ( T child : children ) {
             addChild(child);

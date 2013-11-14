@@ -16,7 +16,7 @@ class NotComparableClassException extends Throwable {
 
     @Override
     public String getMessage() {
-        return "The class " + className + "doesn't implement interface Comparable";
+        return "The class " + className + " doesn't implement interface Comparable";
     }
 
 }
