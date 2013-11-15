@@ -9,7 +9,7 @@ import java.util.List;
  * Date: 11/13/13
  * Time: 9:57 PM
  */
-class Node<T> {
+class Node<T extends Comparable> {
     private T t = null;
     private List<T> children = null;
     private T parent = null;
@@ -28,17 +28,17 @@ class Node<T> {
         return children;
     }
 
-    void addChild(T child) {
+    void addChild(T child) throws NotComparableClassException {
         if ( null == children ) {
-            children = new ArrayList<T>();
+            children = new ArrayList<>();
         }
-        //TODO: need to use binary binarySearch to find position
-        children.add(child);
+
+        Algorithm.addElement(children, child);
     }
 
-    void addChildren(List<T> children) {
+    void addChildren(List<T> children) throws NotComparableClassException {
         if ( null == children ) {
-            children = new ArrayList<T>();
+            children = new ArrayList<>();
         }
         for ( T child : children ) {
             addChild(child);
