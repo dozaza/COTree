@@ -9,6 +9,12 @@ import java.util.List;
  * Time: 9:54 PM
  */
 class Algorithm {
+    /*
+        *
+        *  Binary Search an element in a java.util.List
+        *  The object must inherit Comparable
+        *
+     */
     static int binarySearch(List list, Comparable object) throws NotComparableClassException {
         if ( null == list || list.isEmpty() ) {
             return -1;
@@ -40,6 +46,11 @@ class Algorithm {
         return -1;
     }
 
+    /*
+        *
+        * Add an element into a java.util.List by ensuring the increasing order.
+        *
+     */
     static void addElement(List list, Comparable object) throws NotComparableClassException {
         if ( null == list ) {
             throw new NullPointerException("The collection is null");
