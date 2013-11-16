@@ -15,10 +15,11 @@ class Algorithm {
         *  The object must inherit Comparable
         *
      */
-    static int binarySearch(List list, Comparable object) throws NotComparableClassException {
+    static int binarySearch(List<Node> list, Node node) throws NotComparableClassException {
         if ( null == list || list.isEmpty() ) {
             return -1;
         }
+        Comparable nodeData= node.getData();
 
         int size = list.size();
         int i = 0;
@@ -26,17 +27,12 @@ class Algorithm {
 
         while ( i <= j ) {
             int mid = (j + i)/2;
-            Object midObject = list.get(mid);
-            if ( !(midObject instanceof Comparable) ) {
-                System.out.println(midObject.getClass().getName());
-                throw new NotComparableClassException(midObject.getClass().getName());
-            }
-
-            Comparable compare = (Comparable) midObject;
-            if ( 0 == object.compareTo(compare) ) {
+            Node midNode = list.get(mid);
+            Comparable compare = midNode.getData();
+            if ( 0 == nodeData.compareTo(compare) ) {
                 return mid;
             }
-            else if ( object.compareTo(compare) < 0 ) {
+            else if ( nodeData.compareTo(compare) < 0 ) {
                 j = mid - 1;
             }
             else {
@@ -51,13 +47,15 @@ class Algorithm {
         * Add an element into a java.util.List by ensuring the increasing order.
         *
      */
-    static void addElement(List list, Comparable object) throws NotComparableClassException {
+    static void addElement(List<Node> list, Node node) throws NotComparableClassException {
         if ( null == list ) {
             throw new NullPointerException("The collection is null");
         }
         if ( list.isEmpty() ) {
-            list.add(object);
+            list.add(node);
         }
+
+        Comparable nodeData = node.getData();
 
         int size = list.size();
         int i = 0;
@@ -65,28 +63,23 @@ class Algorithm {
 
         while ( j-i > 1 ) {
             int mid = (j + i)/2;
-            Object midObject = list.get(mid);
-            if ( !(midObject instanceof Comparable) ) {
-                System.out.println(midObject.getClass().getName());
-                throw new NotComparableClassException(midObject.getClass().getName());
-            }
-
-            Comparable compare = (Comparable) midObject;
-            if ( object.compareTo(compare) < 0 ) {
+            Node midNode = list.get(mid);
+            Comparable compare = midNode.getData();
+            if ( nodeData.compareTo(compare) < 0 ) {
                 j = mid;
             }
             else {
                 i = mid;
             }
         }
-        if ( object.compareTo(list.get(i)) < 0 ) {
-            list.add(i, object);
+        if ( nodeData.compareTo(list.get(i)) < 0 ) {
+            list.add(i, node);
         }
-        else if ( object.compareTo(list.get(j)) > 0 ) {
-            list.add(j + 1, object);
+        else if ( nodeData.compareTo(list.get(j)) > 0 ) {
+            list.add(j + 1, node);
         }
-        else if ( object.compareTo(list.get(i)) > 0 && object.compareTo(list.get(j)) < 0 )  {
-            list.add(j, object);
+        else if ( nodeData.compareTo(list.get(i)) > 0 && nodeData.compareTo(list.get(j)) < 0 )  {
+            list.add(j, node);
         }
     }
 }

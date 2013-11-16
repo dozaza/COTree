@@ -25,8 +25,8 @@ public class COTree<T extends  Comparable> {
         * Constructor , create a COTree and define its root
         *
      */
-    public COTree(Node root) throws NotComparableClassException {
-        this.root = root;
+    public COTree(T t) throws NotComparableClassException {
+        this.root = new Node<>(t);
         this.lastTouch = root;
     }
 
@@ -36,8 +36,8 @@ public class COTree<T extends  Comparable> {
         * Attention: if you add a new root to an existing COTree, all nodes will be lost
         *
      */
-    public void addRoot(Node root) throws NotComparableClassException {
-        this.root = root;
+    public void addRoot(T t) throws NotComparableClassException {
+        this.root = new Node<>(t);
         lastTouch = root;
     }
 
@@ -46,7 +46,16 @@ public class COTree<T extends  Comparable> {
         * Add a new child into a parent
         *
      */
-    public void addNode(Node parent, Node newNode) {
+    public void addNode(Node<Comparable> parent, Node<Comparable> node) {
+    }
 
+    /*
+        *
+        * Recursively find a Node
+        *
+     */
+    private Node find(T t) {
+        Node node = null;
+        return node;
     }
 }

@@ -9,9 +9,9 @@ import java.util.List;
  * Date: 11/13/13
  * Time: 9:57 PM
  */
-public abstract class Node<T extends Comparable> {
+class Node<T extends Comparable> {
     private T t = null;
-    private List<T> children = null;
+    private List<Node> children = null;
     private Node parent = null;
 
 
@@ -66,7 +66,7 @@ public abstract class Node<T extends Comparable> {
         * Getter of children list
         *
      */
-    public List<T> getChildren() {
+    public List<Node> getChildren() {
         return children;
     }
 
@@ -75,7 +75,7 @@ public abstract class Node<T extends Comparable> {
         * Add a new child into the list and ensure the order by algorithm
         *
      */
-    public void addChild(T child) throws NotComparableClassException {
+    public void addChild(Node child) throws NotComparableClassException {
         if ( null == children ) {
             children = new ArrayList<>();
         }
@@ -88,11 +88,11 @@ public abstract class Node<T extends Comparable> {
         * Add several children into the children list
         *
      */
-    public void addChildren(List<T> children) throws NotComparableClassException {
+    public void addChildren(List<Node> children) throws NotComparableClassException {
         if ( null == children ) {
             children = new ArrayList<>();
         }
-        for ( T child : children ) {
+        for ( Node child : children ) {
             addChild(child);
         }
     }
@@ -108,10 +108,21 @@ public abstract class Node<T extends Comparable> {
     }
 
     /*
+        *
         * Setter of Parent Node
+        *
      */
     public void setParent(Node parent) {
         this.parent = parent;
+    }
+
+    /*
+        *
+        * Getter of primitive data
+        *
+     */
+    public T getData() {
+        return t;
     }
 
     /*
@@ -120,6 +131,6 @@ public abstract class Node<T extends Comparable> {
         * Key is used to specify a Node when doing search
         *
      */
-    public abstract Object getKey();
+    //public abstract Object getKey();
 }
 
