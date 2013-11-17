@@ -36,29 +36,33 @@ public class COTree<T extends  Comparable> {
         *
         * Add a root into a COTree
         * Attention: if you add a new root to an existing COTree, all nodes will be lost
+        * return the root
         *
      */
-    public void addRoot(T t) throws NotComparableClassException {
+    public Node addRoot(T t) throws NotComparableClassException {
         this.root = new Node<>(t);
         lastTouch = root;
+        return lastTouch;
     }
 
     /*
         *
         * Add a new child into a parent
+        * return the parent
         *
      */
-    public void addNode(Node<T> parent, Node<T> node) throws NotComparableClassException {
-        parent.addChild(node);
+    public Node addNode(Node<T> parent, Node<T> node) throws NotComparableClassException {
+        return parent.addChild(node);
     }
 
     /*
         *
         * Add children into a parent
+        * return the parent
         *
      */
-    public void addNodes(Node<T> parent, List<Node> nodes) throws NotComparableClassException {
-        parent.addChildren(nodes);
+    public Node addNodes(Node<T> parent, List<Node> nodes) throws NotComparableClassException {
+        return parent.addChildren(nodes);
     }
 
     /*
@@ -95,5 +99,14 @@ public class COTree<T extends  Comparable> {
             }
         }
         return null;
+    }
+
+    /*
+        *
+        * Print the tree
+        *
+     */
+    public void print() {
+        //TODO: need to find a way
     }
 }

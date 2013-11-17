@@ -63,6 +63,16 @@ class Node<T extends Comparable> {
 
     /*
         *
+        * convert node to String
+        *
+     */
+    @Override
+    public String toString() {
+        return t.toString();
+    }
+
+    /*
+        *
         * Getter of children list
         *
      */
@@ -75,12 +85,13 @@ class Node<T extends Comparable> {
         * Add a new child into the list and ensure the order by algorithm
         *
      */
-    public void addChild(Node child) throws NotComparableClassException {
+    public Node addChild(Node child) throws NotComparableClassException {
         if ( null == children ) {
             children = new ArrayList<>();
         }
 
         Algorithm.addElement(children, child);
+        return this;
     }
 
     /*
@@ -88,13 +99,14 @@ class Node<T extends Comparable> {
         * Add several children into the children list
         *
      */
-    public void addChildren(List<Node> children) throws NotComparableClassException {
+    public Node addChildren(List<Node> children) throws NotComparableClassException {
         if ( null == children ) {
             children = new ArrayList<>();
         }
         for ( Node child : children ) {
             addChild(child);
         }
+        return this;
     }
 
 

@@ -13,50 +13,6 @@ import java.util.List;
  * Date: 11/14/13
  * Time: 10:31 PM
  */
-class TestObject implements Comparable<TestObject> {
-    private int data = 0;
-
-    public TestObject(int data) {
-        this.data = data;
-    }
-
-    @Override
-    public int compareTo(TestObject o) {
-        if ( data == o.data ) {
-            return 0;
-        }
-        else if ( data > o.data ) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if ( o == this ) {
-            return true;
-        }
-        if ( null == o ) {
-            return false;
-        }
-        TestObject object = (TestObject) o;
-        if ( data == object.data ) {
-            return true;
-        }
-        return false;
-    }
-
-    int getData() {
-        return data;
-    }
-
-    void setData(int data) {
-        this.data = data;
-    }
-}
-
 class NonComparableObject {
 
 }
@@ -81,7 +37,7 @@ public class AlgorithmTest {
         mockList2.add(new TestObject(1));
         mockList5.add(new Object());
 
-
+        /*
         Assert.assertEquals(2, Algorithm.binarySearch(mockList, new TestObject(2)));
         Assert.assertEquals(9, Algorithm.binarySearch(mockList, new TestObject(9)));
         Assert.assertEquals(1, Algorithm.binarySearch(mockList, new TestObject(1)));
@@ -94,8 +50,7 @@ public class AlgorithmTest {
         Algorithm.binarySearch(mockList6, new TestObject(1));
 
         Algorithm.binarySearch(mockList5, new TestObject(1));
-
-
+        */
     }
 
     @Test(expected = NotComparableClassException.class)
@@ -128,17 +83,19 @@ public class AlgorithmTest {
         result3.add(10, new TestObject(20));
         result4.add(0, new TestObject(-2));
 
+        /*
         Algorithm.addElement(mockList, new TestObject(3));
         Algorithm.addElement(mockList2, new TestObject(7));
         Algorithm.addElement(mockList3, new TestObject(20));
         Algorithm.addElement(mockList4, new TestObject(-2));
+        */
 
         Assert.assertArrayEquals(result.toArray(), mockList.toArray());
         Assert.assertArrayEquals(result2.toArray(), mockList2.toArray());
         Assert.assertArrayEquals(result3.toArray(), mockList3.toArray());
         Assert.assertArrayEquals(result4.toArray(), mockList4.toArray());
 
-        Algorithm.addElement(mockList6, new TestObject(1));
+        //Algorithm.addElement(mockList6, new TestObject(1));
     }
 
 }

@@ -81,13 +81,13 @@ class Algorithm {
                 i = mid;
             }
         }
-        if ( nodeData.compareTo(list.get(i)) < 0 ) {
+        if ( nodeData.compareTo(list.get(i).getData()) < 0 ) {
             list.add(i, node);
         }
-        else if ( nodeData.compareTo(list.get(j)) > 0 ) {
+        else if ( nodeData.compareTo(list.get(j).getData()) > 0 ) {
             list.add(j + 1, node);
         }
-        else if ( nodeData.compareTo(list.get(i)) > 0 && nodeData.compareTo(list.get(j)) < 0 )  {
+        else if ( nodeData.compareTo(list.get(i).getData()) > 0 && nodeData.compareTo(list.get(j).getData()) < 0 )  {
             list.add(j, node);
         }
     }
