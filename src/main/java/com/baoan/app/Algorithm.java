@@ -15,11 +15,19 @@ class Algorithm {
         *  The object must inherit Comparable
         *
      */
-    static int binarySearch(List<Node> list, Node node) throws NotComparableClassException {
+    static Node binarySearch(List<Node> list, Node node) {
+        return binarySearch(list, node.getData());
+    }
+
+    /*
+        *
+        * Binary Search an element by using the node data
+        *
+     */
+    static Node binarySearch(List<Node> list, Comparable nodeData) {
         if ( null == list || list.isEmpty() ) {
-            return -1;
+            return null;
         }
-        Comparable nodeData= node.getData();
 
         int size = list.size();
         int i = 0;
@@ -30,7 +38,7 @@ class Algorithm {
             Node midNode = list.get(mid);
             Comparable compare = midNode.getData();
             if ( 0 == nodeData.compareTo(compare) ) {
-                return mid;
+                return midNode;
             }
             else if ( nodeData.compareTo(compare) < 0 ) {
                 j = mid - 1;
@@ -39,15 +47,16 @@ class Algorithm {
                 i = mid + 1;
             }
         }
-        return -1;
+        return null;
     }
+
 
     /*
         *
         * Add an element into a java.util.List by ensuring the increasing order.
         *
      */
-    static void addElement(List<Node> list, Node node) throws NotComparableClassException {
+    static void addElement(List<Node> list, Node node) {
         if ( null == list ) {
             throw new NullPointerException("The collection is null");
         }

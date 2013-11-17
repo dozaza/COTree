@@ -1,5 +1,7 @@
 package com.baoan.app;
 
+import java.util.List;
+
 /**
  * Editor: intellij@Ubuntu
  * User: baoan
@@ -46,7 +48,17 @@ public class COTree<T extends  Comparable> {
         * Add a new child into a parent
         *
      */
-    public void addNode(Node<Comparable> parent, Node<Comparable> node) {
+    public void addNode(Node<T> parent, Node<T> node) throws NotComparableClassException {
+        parent.addChild(node);
+    }
+
+    /*
+        *
+        * Add children into a parent
+        *
+     */
+    public void addNodes(Node<T> parent, List<Node> nodes) throws NotComparableClassException {
+        parent.addChildren(nodes);
     }
 
     /*
@@ -54,8 +66,34 @@ public class COTree<T extends  Comparable> {
         * Recursively find a Node
         *
      */
-    private Node find(T t) {
-        Node node = null;
-        return node;
+    public Node find(T t) {
+        if ( null == root ) {
+            return null;
+        }
+        return findImpl(root.getChildren(), t);
+    }
+
+    /*
+        *
+        * Implementation of find method.
+        *
+     */
+    private Node findImpl(List<Node> children, T t) {
+        if ( null == children || children.isEmpty() ) {
+            return null;
+        }
+        Node result = Algorithm.binarySearch(children, t);
+        if ( result != null ) {
+            return result;
+        }
+        else {
+            for ( Node child : children ) {
+                Node result2 = findImpl(child.getChildren(), t);
+                if ( result2 != null ) {
+                    return result2;
+                }
+            }
+        }
+        return null;
     }
 }
