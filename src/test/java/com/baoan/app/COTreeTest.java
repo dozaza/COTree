@@ -12,6 +12,7 @@ public class COTreeTest {
 
     @Test
     public void printTest() throws NotComparableClassException {
+        /*
         COTree tree = new COTree();
         Node root = tree.addRoot(new TestObject(0));
         tree.print();
@@ -25,5 +26,6 @@ public class COTreeTest {
 
                 tree.print();
         System.out.println();
+        */
     }
 }

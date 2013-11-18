@@ -1,5 +1,6 @@
 package com.baoan.app;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import java.util.List;
  * Date: 11/13/13
  * Time: 9:57 PM
  */
-class Node<T extends Comparable> {
-    private T t = null;
+public abstract class Node implements Comparable{
+    // Not serialized by gson
+    private transient Comparable key = null;
+
     private List<Node> children = null;
     private Node parent = null;
+    private boolean leaf = true;
 
 
     /*
@@ -21,11 +25,8 @@ class Node<T extends Comparable> {
         * Parent of this Node is initialized with null
         *
      */
-    public Node(T t) throws NotComparableClassException {
-        if ( !(t instanceof Comparable) )  {
-            throw new NotComparableClassException(t.getClass().getName());
-        }
-        this.t = t;
+    public Node(Comparable key) {
+        this.key = key;
     }
 
     /*
@@ -34,11 +35,8 @@ class Node<T extends Comparable> {
         * Parent is defined by the parameter
         *
      */
-    public Node(T t, Node parent) throws NotComparableClassException {
-        if ( !(t instanceof Comparable) )  {
-            throw new NotComparableClassException(t.getClass().getName());
-        }
-        this.t = t;
+    public Node(Comparable key, Node parent) {
+        this.key = key;
         this.parent = parent;
     }
 
@@ -48,18 +46,8 @@ class Node<T extends Comparable> {
         *
      */
     @Override
-    public boolean equals(Object o) {
-        return null != o && (this == o || o instanceof Node && ((Node) o).t.equals(t));
-    }
+    public abstract boolean equals(Object o);
 
-    /*
-        *
-        * Comparison with a primitive data
-        *
-     */
-    public boolean equals(T t) {
-        return this.t.equals(t);
-    }
 
     /*
         *
@@ -67,8 +55,22 @@ class Node<T extends Comparable> {
         *
      */
     @Override
-    public String toString() {
-        return t.toString();
+    public abstract String toString();
+
+    /*
+        *
+        * Comparison with the key of node
+        *
+     */
+    @Override
+    public final int compareTo(Object o) {
+        if ( o instanceof Node ) {
+            return key.compareTo(((Node) o).getKey());
+        }
+        else if ( o instanceof Comparable ) {
+            return key.compareTo(o);
+        }
+        throw new ClassCastException(o.getClass().getName() + " does not implement interface Comparable" );
     }
 
     /*
@@ -91,7 +93,8 @@ class Node<T extends Comparable> {
         }
 
         Algorithm.addElement(children, child);
-        return this;
+        leaf = false;
+        return child;
     }
 
     /*
@@ -99,14 +102,14 @@ class Node<T extends Comparable> {
         * Add several children into the children list
         *
      */
-    public Node addChildren(List<Node> children) throws NotComparableClassException {
+    public void addChildren(List<Node> children) throws NotComparableClassException {
         if ( null == children ) {
             children = new ArrayList<>();
         }
         for ( Node child : children ) {
             addChild(child);
         }
-        return this;
+        leaf = false;
     }
 
 
@@ -130,12 +133,11 @@ class Node<T extends Comparable> {
 
     /*
         *
-        * Getter of primitive data
+        * Getter of Key
+        * Key is the unique and comparable symbol of a node
         *
      */
-    public T getData() {
-        return t;
-    }
+    public abstract Comparable getKey();
 
     /*
         *

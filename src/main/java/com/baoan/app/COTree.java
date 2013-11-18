@@ -1,5 +1,8 @@
 package com.baoan.app;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 /**
@@ -8,9 +11,11 @@ import java.util.List;
  * Date: 11/16/13
  * Time: 6:04 PM
  */
-public class COTree<T extends  Comparable> {
-    private Node<T> root = null;
-    private Node<T> lastTouch = null;
+public class COTree {
+    private Node root = null;
+    private Node lastTouch = null;
+
+    private final Gson gson;
 
     /*
         *
@@ -18,6 +23,9 @@ public class COTree<T extends  Comparable> {
         *
      */
     public COTree() {
+        GsonBuilder builder = new GsonBuilder();
+        gson = builder.create();
+
         root = null;
         lastTouch = null;
     }
@@ -27,8 +35,11 @@ public class COTree<T extends  Comparable> {
         * Constructor , create a COTree and define its root
         *
      */
-    public COTree(T t) throws NotComparableClassException {
-        this.root = new Node<>(t);
+    public COTree(Node root) throws NotComparableClassException {
+        GsonBuilder builder = new GsonBuilder();
+        gson = builder.create();
+
+        this.root = root;
         this.lastTouch = root;
     }
 
@@ -39,8 +50,8 @@ public class COTree<T extends  Comparable> {
         * return the root
         *
      */
-    public Node addRoot(T t) throws NotComparableClassException {
-        this.root = new Node<>(t);
+    public Node addRoot(Node root) throws NotComparableClassException {
+        this.root = root;
         lastTouch = root;
         return lastTouch;
     }
@@ -51,7 +62,7 @@ public class COTree<T extends  Comparable> {
         * return the parent
         *
      */
-    public Node addNode(Node<T> parent, Node<T> node) throws NotComparableClassException {
+    public Node addNode(Node parent, Node node) throws NotComparableClassException {
         return parent.addChild(node);
     }
 
@@ -61,8 +72,8 @@ public class COTree<T extends  Comparable> {
         * return the parent
         *
      */
-    public Node addNodes(Node<T> parent, List<Node> nodes) throws NotComparableClassException {
-        return parent.addChildren(nodes);
+    public void addNodes(Node parent, List<Node> nodes) throws NotComparableClassException {
+        parent.addChildren(nodes);
     }
 
     /*
@@ -70,11 +81,14 @@ public class COTree<T extends  Comparable> {
         * Recursively find a Node
         *
      */
-    public Node find(T t) {
+    public Node find(Comparable key) {
         if ( null == root ) {
             return null;
         }
-        return findImpl(root.getChildren(), t);
+        else if ( root.getKey().equals(key) ) {
+            return root;
+        }
+        return findImpl(root.getChildren(), key);
     }
 
     /*
@@ -82,17 +96,17 @@ public class COTree<T extends  Comparable> {
         * Implementation of find method.
         *
      */
-    private Node findImpl(List<Node> children, T t) {
+    private Node findImpl(List<Node> children, Comparable key) {
         if ( null == children || children.isEmpty() ) {
             return null;
         }
-        Node result = Algorithm.binarySearch(children, t);
+        Node result = Algorithm.binarySearch(children, key);
         if ( result != null ) {
             return result;
         }
         else {
             for ( Node child : children ) {
-                Node result2 = findImpl(child.getChildren(), t);
+                Node result2 = findImpl(child.getChildren(), key);
                 if ( result2 != null ) {
                     return result2;
                 }
@@ -108,5 +122,14 @@ public class COTree<T extends  Comparable> {
      */
     public void print() {
         //TODO: need to find a way
+    }
+
+    /*
+        *
+        * Covert to json string
+        *
+     */
+    public String toJson() {
+        return gson.toJson(root);
     }
 }
